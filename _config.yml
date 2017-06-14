@@ -1,2 +1,3 @@
 name: Qiao Jun
 permalink: /blog/:year/:month/:day/:title
+paginate: 1
