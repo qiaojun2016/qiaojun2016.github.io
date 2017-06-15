@@ -1,5 +1,5 @@
 name: Qiao Jun
 permalink: /blog/:year/:month/:day/:title
 paginate: 1
-baseurl: /blog
+baseurl: /
 paginate_path: "/blog/page:num/"
