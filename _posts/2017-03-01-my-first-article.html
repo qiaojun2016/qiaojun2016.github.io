@@ -26,7 +26,9 @@ title: 一个Inflate引发的思考
 </RecyclerView> 
 {% endhighlight %}
 在onCreateViewHolder中（我使用的是LinearLayoutManager，横向布局）:
-    {% highlight java %} View view = LayoutInflater.from(context).inflate(R.layout.item,null); {% endhighlight %}
+{% highlight java %} 
+View view = LayoutInflater.from(context).inflate(R.layout.item,null);
+{% endhighlight %}
 <p>但是问题出现了，假如你也实验了，你就会发现每个item都没有垂直居中显示，我的意思是说，按照我当前的理解，因为我的RecyclerView刚刚设置了高度96dp，而我的  item的高度也是96dp，那么我的ImageView又设置了layout_centerInParent = true属性，根据正常逻辑，必须垂直居中的。后来我把item的高度改match_parent然 而并没有什么卵用，所以我就怀疑item的这个RelativeLayout的高度和宽度根本就没有用到。</p>
 那么问题出在哪呢？我直接说出来大家看看这个是不是有问题：
 <code>View view = LayoutInflater.from(context).inflate(R.layout.item, null);</code>  
