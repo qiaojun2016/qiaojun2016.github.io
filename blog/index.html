@@ -10,8 +10,7 @@ title: Jax's Blog
     <span class="date">{{ post.date }}</span>
   </p>
   <div class="content">
-   <p>{{ post.excerpt | remove: '<p>' | remove: '</p>' }}
-    <a href="{{ post.url }}">Read more...</a>
+   <p>{{ post.excerpt | remove: '<p>' | remove: '</p>' }}<a href="{{ post.url }}">Read more...</a>
     </p>
   </div>
 {% endfor %}
