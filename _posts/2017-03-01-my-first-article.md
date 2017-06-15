@@ -3,10 +3,10 @@ layout: post
 date: 2017-03-01
 title: 一个Inflate引发的思考
 ---
-## 一个Inflate引发的思考
 ### 背景
 今天项目中需要使用RecycleView，但是我差不多已经忘了该如何使用了。作为代码的搬运工，我迅速从网上找到了模板，三两下把代码给折腾完了。然后我自己根据需求写了个简单的item.xml 大概这么写的
-```java
+{% highlight xml %}
+```
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="96dp">
@@ -25,6 +25,7 @@ title: 一个Inflate引发的思考
         android:layout_height="96dp">
 </RecyclerView>
 ```
+{% endhighlight %}
 在onCreateViewHolder中（我使用的是LinearLayoutManager，横向布局）:
 ```
     View view = LayoutInflater.from(context).inflate(R.layout.item,null);
