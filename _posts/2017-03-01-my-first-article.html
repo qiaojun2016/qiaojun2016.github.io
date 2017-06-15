@@ -39,11 +39,11 @@ View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);
 <p>首先这个parent我用的是 onCreateViewHolder 传递过来的参数。这个parent参数的含义，相比大家都知道了。如果不知道,那么就自己查看源码吧</p>
 <p>方法签名如下:</>
 {% highlight java %}
-    public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot) 
+public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot) 
 {% endhighlight %}
 <p>返回的视图类型肯定是R.layout.item的根布局类型，比如我们的这个根布局是RelativeLayout 那么返回的就是RelativeLayout类型，然而不同之处就在于返回的这个视图是否已经设置过他的LayoutParams。 不管 attachToRoot 是否为真，只要root存在，且不为空，那么就会为返回的视图(这里的RelativeLayout)设置它自己默认生成的LayoutParams。而attachToParent的作用就在于，是否将这个视图作为子视图添加到parent上。</p>       
 <p>于是，现在大家想一下这样一个问题，我的 ImageView 它的 layout_height 和 layout_width 是给谁使用的？都知道是用来设置 ImageView的高度和宽度的。所以我对这俩属性的定义就是："这俩属性是用来设置其在父控件中的高度和宽度的，如果没有了父控件，那么这些高度和宽度将没有意义"。在属性的命名上不知发现了没有，为什么是 layout_ 开头的呢，而不是android:width 明显这是有意义，说明是与父控件相关的，或者说父控件需要这个值。</p>   
-<p>回到原来的问题bug，也就是inflate的问题，我简单的看了一下 inflate 的源码，基本过程如下 </p> 
+<p>回到原来的问题bug，也就是inflate的问题，我简单的看了一下 inflate 的源码，基本过程如下: </p> 
 <ul>
 <li>创建视图的根布局(这里就是RelativeLayout)。</li>  
 <li>如果 parent 是存在的，就用 parent 返回一个 LayoutParams,给这个根布局(RelativeLayout)使用，不存在就不会设置。并且 attachToRoot 为 **true** 那么就把根布局添加到 parent，否则就不添加。</li>  
@@ -53,7 +53,7 @@ View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);
 <p>想必同学们都用过动态创建过View，比如动态创建一个 TextView，需要创建后添加到 LinearLayout 中，如果你没有主动调用TextView.setLayoutParams(..),你在addView的时候，LinearLayout会主动为你加上。如果不加上，LinearLayout就不知道这个TextView需要占多大的位置。</p>    
 <p>回到项目中遇到的问题：因为我是用下面的方法填充的: </p> 
 {% highlight java %}
-    LayoutInflater.from(context).inflate(R.layout.item, null)
+LayoutInflater.from(context).inflate(R.layout.item, null)
 {% endhighlight %}
 <p>结果导致了并没有设置生成的RelativeLayout的LayoutParams,然后在向RecyclerView添加过程中，RecyclerView发现，要被添加的View竟然没有LayoutParams参数，于是RecyclerView就默认为RelativeLayout设置了两个wrap_content。于是item布局发生了这样变化： </p>  
 {% highlight java %}
