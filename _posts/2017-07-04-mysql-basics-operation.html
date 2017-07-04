@@ -1,1 +1,13 @@
-
+---
+layout: post
+date: 2017-07-04
+title: mysql的基本操作
+---
+  <p> mysql命令行添加用户：</p>
+  <code>CREATE USER 'username'@'hostname' IDENTIFIED BY 'password' WITH GRANT OPTION</code>;
+  <p>给用户添加所有权限：</p>
+  <code>GRANT ALL ON *.* TO 'username'@'hostname';</code>
+  <p>撤销某个用户的权限</p>
+  <code>EVOKE ALL  ON dbName.tbName  FROM 'username'@'hostname';</code>
+  <p>查看某个用户的权限详情</p>
+  <code>show grants for 'username'@'hostname';
