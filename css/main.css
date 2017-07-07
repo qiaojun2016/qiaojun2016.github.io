@@ -27,6 +27,7 @@ h1 {
 h2 {
     font-size: 2em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    color:#333
 }
 p {
     font-size: 1.5em;
@@ -57,6 +58,7 @@ code {
     
 }
 
+/*代码块显示*/
 pre.code {
     background-color:#2b2b2b;
     color:#A9B7C6;
