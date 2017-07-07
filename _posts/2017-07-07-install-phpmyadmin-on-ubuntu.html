@@ -9,10 +9,7 @@ title: 在ubuntu16 安装 phpamyadmin
 这一点要注意。之前可能会询问是否使用dbconfig-commom 来启动数据库，选择yes，然后确认密码。</p>
 <p>整个的安装过程实际就是把phpMyAdmin Apache的配置文件放到了/etc/apache2/conf-enabled 目录中，在这自动加载读取，我们唯一要做的事情
 就是启动PHP 的 mcrypt 和 mbstring的扩展。</p>
-<code> <pre>
-       $ sudo phpenmod mcrypt
-       $ sudo phpenmod mbstring
-       </pre>
-</code>
+<code> $ sudo phpenmod mcrypt </code>
+<code>$ sudo phpenmod mbstring </code>
 <p> 重启我们的额apache2的服务:</p>
 <code> sudo systemctl restart apache2</code>
