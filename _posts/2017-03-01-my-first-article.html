@@ -8,40 +8,33 @@ excerpt_separator: <!-- more -->
 <p>今天项目中需要使用<span class="keyword">RecycleView</span>，但是我差不多已经忘了该如何使用了。作为代码的搬运工，我迅速从网上找到了模板，三两下把代码给折腾完了。然后我自己根据需求写了个简单的<span class="keyword">item.xml</span>大概这么写的:</p> 
 
 <pre class="code">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"   
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"   
     android:layout_width="match_parent"  
-    android:layout_height="96dp">    
-    <ImageView   
+    android:layout_height="96dp"&gt;    
+    &lt;ImageView   
         android:layout_centerInParent="true"  
         android:layout_width="wrap_content"  
         android:layout_height="wrap_content"   
         android:src="@drawable/icon_camera"    
-        />  
-</RelativeLayout>   
+        /&gt;  
+&lt;/RelativeLayout&gt; 
 
-<RecyclerView    
+&lt;RecyclerView    
         android:id="@+id/recycler"   
         android:layout_width="match_parent"  
-        android:layout_height="96dp">     
-</RecyclerView> 
+        android:layout_height="96dp"&gt;   
+&lt;/RecyclerView&gt;
 </pre>
 <p>在<span class="keyword">onCreateViewHolder</span>中(我使用的是<span class="keyword">LinearLayoutManager，横向布局):</p>
 <pre class="code">View view = LayoutInflater.from(context).inflate(R.layout.item,null);</pre>
 <p>但是问题出现了，假如你也实验了，你就会发现每个item都没有垂直居中显示，我的意思是说，按照我当前的理解，因为我的<span class="keyword">RecyclerView</span>刚刚设置了高度<span class="keyword">96dp</span>，而我的  <span class="keyword">item</span>的高度也是<span class="keyword">96dp</span>，那么我的<span class="keyword">ImageView</span>又设置了<span class="keyword">layout_centerInParent = true</span>属性，根据正常逻辑，必须垂直居中的。后来我把<span class="keyword">item</span>的高度改<span class="keyword">match_parent</span>然 而并没有什么卵用，所以我就怀疑<span class="keyword">item</span>的这个<span class="keyword">RelativeLayout</span>的高度和宽度根本就没有用到。</p>
 <p>那么问题出在哪呢？我直接说出来大家看看这个是不是有问题:</p>
-<pre class="code">
-{% highlight java%}
-View view = LayoutInflater.from(context).inflate(R.layout.item, null);
-View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);
-{% endhighlight %}</pre>
+<pre class="code">View view = LayoutInflater.from(context).inflate(R.layout.item, null);
+View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);</pre>
 
 <p>首先这个<span class="keyword">parent</span>我用的是<span class="keyword">onCreateViewHolder</span> 传递过来的参数。这个<span class="keyword">parent</span>参数的含义，相比大家都知道了。如果不知道,那么就自己查看源码吧</p>
 <p>方法签名如下:</p>
-<pre class="code">
-{% highlight java %}
-public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot) 
-{% endhighlight %}
-</pre>
+<pre class="code">public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot)</pre>
 <p>返回的视图类型肯定是<span class="keyword">R.layout.item</span>的根布局类型，比如我们的这个根布局是<span class="keyword">RelativeLayout</span>那么返回的就是<span class="keyword">RelativeLayout</span>类型，然而不同之处就在于返回的这个视图是否已经设置过他的<span class="keyword">LayoutParams</span>。不管<span class="keyword">attachToRoot</span> 是否为真，只要<span class="keyword">root</span>存在，且不为空，那么就会为返回的视图(这里的<span class="keyword">RelativeLayout</span>)设置它自己默认生成的<span class="keyword">LayoutParams</span>。而<span class="keyword">attachToParent</span>的作用就在于，是否将这个视图作为子视图添加到<span class="keyword">parent</span>上。</p>       
 <p>于是，现在大家想一下这样一个问题，我的<span class="keyword">ImageView</span>它的<span class="keyword">layout_height</span>和<span class="keyword">layout_width</span>是给谁使用的？都知道是用来设置<span class="keyword">ImageView</span>的高度和宽度的。所以我对这俩属性的定义就是："这俩属性是用来设置其在父控件中的高度和宽度的，如果没有了父控件，那么这些高度和宽度将没有意义"。在属性的命名上不知发现了没有，为什么是<span class="keyword">layout_</span> 开头的呢，而不是<span class="keyword">android:width</span> 明显这是有意义，说明是与父控件相关的，或者说父控件需要这个值。</p>   
 <p>回到原来的问题bug，也就是inflate的问题，我简单的看了一下inflate的源码，基本过程如下: </p> 
@@ -53,23 +46,11 @@ public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean a
 <p>其实，简单说来就是解析我们的<span class="keyword">item.xml</span>文件，动态递归的从上到下创建这个<span class="keyword">View</span>。 </p>  
 <p>想必同学们都用过动态创建过<span class="keyword">View</span>，比如动态创建一个<span class="keyword">TextView</span>，需要创建后添加到<span class="keyword">LinearLayout</span>中，如果你没有主动调用<span class="keyword">TextView.setLayoutParams(..)</span>，你在<span class="keyword">addView</span>的时候，<span class="keyword">LinearLayout</span>会主动为你加上。如果不加上，<span class="keyword">LinearLayout</span>就不知道这个<span class="keyword">TextView</span>需要占多大的位置。</p>    
 <p>回到项目中遇到的问题：因为我是用下面的方法填充的: </p> 
-<pre class="code">
-{% highlight java %}
-LayoutInflater.from(context).inflate(R.layout.item, null)
-{% endhighlight %}
-</pre>
+<pre class="code">LayoutInflater.from(context).inflate(R.layout.item, null)</pre>
 <p>结果导致了并没有设置生成的<span class="keyword">RelativeLayout</span>的<span class="keyword">LayoutParams</span>,然后在向<span class="keyword">RecyclerView</span>添加过程中，<span class="keyword">RecyclerView</span>发现，要被添加的<span class="keyword">View</span>竟然没有<span class="keyword">LayoutParams</span>参数，于是<span class="keyword">RecyclerView</span>就默认为<span class="keyword">RelativeLayout</span>设置了两个<span class="keyword">wrap_content</span>。于是<span class="keyword">item</span>布局发生了这样变化:</p> 
-<pre class="code"> 
-{% highlight java %}
-andrid:layout_width = "match_parent"  
-android:layout_height = "96dp" 
-{% endhighlight %}
-</pre>
+<pre class="code">andrid:layout_width = "match_parent"
+android:layout_height = "96dp"</pre>
 <p>变成了</p>
-<pre class="code">
-{% highlight java %}
-andrid:layout_width = "wrap_content"   
-android:layout_height = "wrap_content"
-{% endhighlight %}
-</pre>
+<pre class="code">andrid:layout_width = "wrap_content"
+android:layout_height = "wrap_content"</pre>
 <p>至于怎么解决，看你们的了。</p>    
