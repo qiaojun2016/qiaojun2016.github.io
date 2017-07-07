@@ -1,5 +1,8 @@
-
-
+---
+layout: post
+date: 2017-07-07
+title: 在ubuntu16 安装 phpamyadmin
+---
 
 <h2>第一步:从ubuntu仓库中下载我们的phpmyadmin</h2>
 <code> $ sudo apt-get install phpmyadmin php-mstring php-gettext </code>
@@ -12,3 +15,4 @@ sudo phpenmod mbstring
 </code>
 <p> 重启我们的额apache2的服务:</p>
 <code> sudo systemctl restart apache2</code>
+<br/>
