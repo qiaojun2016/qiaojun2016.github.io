@@ -38,7 +38,7 @@ View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);</
 <p>返回的视图类型肯定是<span class="keyword">R.layout.item</span>的根布局类型，比如我们的这个根布局是<span class="keyword">RelativeLayout</span>那么返回的就是<span class="keyword">RelativeLayout</span>类型，然而不同之处就在于返回的这个视图是否已经设置过他的<span class="keyword">LayoutParams</span>。不管<span class="keyword">attachToRoot</span> 是否为真，只要<span class="keyword">root</span>存在，且不为空，那么就会为返回的视图(这里的<span class="keyword">RelativeLayout</span>)设置它自己默认生成的<span class="keyword">LayoutParams</span>。而<span class="keyword">attachToParent</span>的作用就在于，是否将这个视图作为子视图添加到<span class="keyword">parent</span>上。</p>       
 <p>于是，现在大家想一下这样一个问题，我的<span class="keyword">ImageView</span>它的<span class="keyword">layout_height</span>和<span class="keyword">layout_width</span>是给谁使用的？都知道是用来设置<span class="keyword">ImageView</span>的高度和宽度的。所以我对这俩属性的定义就是："这俩属性是用来设置其在父控件中的高度和宽度的，如果没有了父控件，那么这些高度和宽度将没有意义"。在属性的命名上不知发现了没有，为什么是<span class="keyword">layout_</span> 开头的呢，而不是<span class="keyword">android:width</span> 明显这是有意义，说明是与父控件相关的，或者说父控件需要这个值。</p>   
 <p>回到原来的问题bug，也就是inflate的问题，我简单的看了一下inflate的源码，基本过程如下: </p> 
-<ul>
+<ul class="steps">
 <li>创建视图的根布局(这里就是<span class="keyword">RelativeLayout</span>)。</li>  
 <li>如果<span class="keyword">parent</span>是存在的，就用<span class="keyword">parent</span>返回一个<span class="keyword">LayoutParams</span>,给这个根布局(<span class="keyword">RelativeLayout</span>)使用，不存在就不会设置。并且<span class="keyword">attachToRoot</span>为<span class="keyword">true</span>那么就把根布局添加到<span class="keyword">parent</span>，否则就不添加。</li>  
 <li>递归创建<span class="keyword">childView</span>。</li> 
