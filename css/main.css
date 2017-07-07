@@ -46,7 +46,8 @@ p {
 /*英文单词*/
 span.keyword {
     letter-spacing:2px;
-    background-color:white;
+    /*background-color:white;*/
+    background-color:#F1FAFA;
     border:0.5px outset white;
     font-weight:bold;
 }
