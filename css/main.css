@@ -57,11 +57,11 @@ code {
     
 }
 
-pre .code {
-    background-color:#2b2b2b;
+pre.code {
+background-color:#2b2b2b;
     color:#A9B7C6;
     font-style:normal;
     font-family:'Courier New', monospace;
-    padding:6px 5px 6px 5px;
-    border-radius:4px;
+    padding:8px 5px 8px 5px;
+border-radius:5px;
 }
