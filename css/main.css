@@ -37,17 +37,14 @@ h2 {
     color:#333
 }
 p {
-    font-size: 1.5em;
+    font-size: 1.2em;
     /*line-height: 1.2em;*/
-    text-align:justify;
+  
     color: #333;
     /*文本块首行缩进30个像素*/
     text-indent:30px;
-    /*字符间距 5个像素*/
-    letter-spacing:5px;
+  
     /*单词间距5个像素*/
-    word-spacing:5px;
-    line-height:180%;
 
 }
 /*英文单词*/
