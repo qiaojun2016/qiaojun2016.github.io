@@ -1,7 +1,7 @@
 body {
     margin: 60px auto;
-    width: 70%;
-    background-color:#F1FAFA;
+    width: 66%;
+ 
 }
 nav ul, footer ul {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
@@ -24,41 +24,17 @@ a {
     text-decoration: none;
     color: #999;
 }
+
 a:hover {
     text-decoration: underline;
 }
-h1 {
-    font-size: 3em;
-    font-family:'Helvetica', 'Arial', 'Sans-Serif';
-}
-h2 {
-    font-size: 1.8em;
-    font-family:'Helvetica', 'Arial', 'Sans-Serif';
-    color:#333
-}
+
+
 p {
-    font-size: 1.5em;
-    /*line-height: 1.2em;*/
-    text-align:justify;
     color: #333;
     /*文本块首行缩进30个像素*/
     text-indent:30px;
-    /*字符间距 5个像素*/
-    letter-spacing:5px;
-    /*单词间距5个像素*/
-    word-spacing:5px;
-    line-height:180%;
-
 }
-/*英文单词*/
-span.keyword {
-    letter-spacing:2px;
-    /*background-color:white;*/
-    background-color:#F1FAFA;
-    border:0.5px outset white;
-    font-weight:bold;
-}
-
 
 footer {
     border-top: 1px solid #d5d5d5;
