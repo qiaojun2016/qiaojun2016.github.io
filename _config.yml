@@ -3,4 +3,3 @@ permalink: /blog/:year/:month/:day/:title
 paginate: 10
 baseurl: /
 paginate_path: "/blog/page:num/"
-page.date:"YYYY-MM-DD"
