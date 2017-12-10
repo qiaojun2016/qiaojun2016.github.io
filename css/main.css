@@ -67,6 +67,9 @@ pre.code {
     color:#A9B7C6;
     font-style:normal;
     font-family:'Courier New', monospace;
-    padding:8px 5px 8px 5px;
-    border-radius:5px;
+    padding:16px 16px 16px 16px;
+    border-radius:2px;
+}
+span.en {
+	letter-spacing: 1px;
 }
