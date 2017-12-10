@@ -34,6 +34,8 @@ p {
     color: #333;
     /*文本块首行缩进30个像素*/
     text-indent:30px;
+    letter-spacing: 4px;
+    line-height:170%;
 }
 
 footer {
