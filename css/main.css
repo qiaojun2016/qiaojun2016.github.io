@@ -34,7 +34,7 @@ p {
     color: #333;
     /*文本块首行缩进30个像素*/
     text-indent:30px;
-    letter-spacing: 4px;
+    /*letter-spacing: 4px;*/
     line-height:170%;
 }
 
@@ -69,7 +69,7 @@ pre.code {
     font-family:'Courier New', monospace;
     padding:16px 16px 16px 16px;
     border-radius:2px;
-	line-height:4px;
+	line-height:16px;
 }
 span.en {
 	letter-spacing: 1px;
