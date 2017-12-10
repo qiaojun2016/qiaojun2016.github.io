@@ -2,7 +2,7 @@
 layout: default
 ---
 <h2>{{ page.title }}</h2>
-<p class="meta">{{ page.date }}</p>
+<p class="meta">{{ page.date| date: "%Y-%m-%d"}}</p>
 
 <div class="post">
   {{ content }}
