@@ -4,9 +4,9 @@ date: 2017-12-7
 title: git 使用小问题
 excerpt_separator: <!-- more -->
 ---
-<p>1、使用<span class="en">git</span> 的时候，可以忽略某些文件。即在<span class="en">.gitignore</span> 中增加需要忽略的文件。但是如果之前提交过该文件，即文件<!-- more -->
-  位于暂存区，说明已经被跟踪。为了使得<span class="en">.gitignore</span>新添加的忽略文件生效。我们需要删除暂存区的跟踪。
-使用命令：<span class="en">git rm --cached</span> 。然后重新提交。有一点，虽然提交后推到远端，但是你小伙伴的本地代码暂存去里面，可能还
-保留，所以，他也需要执行 <span class="en">git rm --cached</span> ，删除暂存区域。然后重新提交。否则，他提交之后会出错。
-说了这么多，就是说所有修改此代码的人，都要执行<span class="en">git rm --cached</span>删除暂存区域。然后重新提交。否则，他提交之后会出错。
-因此 <span class="en">git rm --cached</span>做了什么呢？</p>
+<p>1、使用git 的时候，可以忽略某些文件。即在.gitignore中增加需要忽略的文件。但是如果之前提交过该文件，即文件<!-- more -->
+  位于暂存区，说明已经被跟踪。为了使得.gitignore新添加的忽略文件生效。我们需要删除暂存区的跟踪。
+使用命令：git rm --cached 。然后重新提交。有一点，虽然提交后推到远端，但是你小伙伴的本地代码暂存去里面，可能还
+保留，所以，他也需要执行 git rm --cached，删除暂存区域。然后重新提交。否则，他提交之后会出错。
+说了这么多，就是说所有修改此代码的人，都要执行git rm --cached删除暂存区域。然后重新提交。否则，他提交之后会出错。
+因此 git rm --cached做了什么呢？</p>
