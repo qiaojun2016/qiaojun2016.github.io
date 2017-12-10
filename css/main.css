@@ -67,10 +67,8 @@ pre.code {
     color:#A9B7C6;
     font-style:normal;
     font-family:'Courier New', monospace;
-    padding:16px 16px 16px 16px;
+    padding:8px 8px 8px 8px;
     border-radius:2px;
 	 line-height:150%;
 }
-span.en {
-	letter-spacing: 1px;
-}
+
