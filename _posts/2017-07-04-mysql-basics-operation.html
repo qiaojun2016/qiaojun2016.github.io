@@ -4,10 +4,10 @@ date: 2017-07-04
 title: mysql的基本操作
 excerpt_separator: <!-- more -->
 ---
-  <p>mysql命令行添加用户:</p>
+  <p>mysql命令行添加用户:</p> <!-- more -->
   <pre class="code">CREATE USER 'username'@'hostname' IDENTIFIED BY 'password' WITH GRANT OPTION;</pre>
   <p>给用户添加所有权限:</p>
-  <pre class="code">GRANT ALL ON *.* TO 'username'@'hostname';</pre><!-- more -->
+  <pre class="code">GRANT ALL ON *.* TO 'username'@'hostname';</pre>
   <p>撤销某个用户的权限</p>
   <pre class="code">EVOKE ALL  ON dbName.tbName  FROM 'username'@'hostname';</pre>
   <p>查看某个用户的权限详情:</p>
