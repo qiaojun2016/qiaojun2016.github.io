@@ -64,6 +64,7 @@ pre.code {
     font-family:'Courier New', monospace;
     padding:8px 8px 8px 8px;
     border-radius:2px;
-	 line-height:150%;
+	line-height:150%;
+	overflow: scroll;
 }
 
