@@ -1,0 +1,21 @@
+1、如何修改linux 用户的密码？
+	passwd "password" "username"
+2、用脚本创建 birdgroup 用户组，并在组里面添加 5个用户[vbirduser1,vbirduser2,vbirduser3,vbirduser4,vbirduser5]
+   默认密码是password
+	
+	#!/bin/bash
+	
+	groupadd vbirdgroup
+	
+	for username in vbirduser1 vbirduser2 vbirduser3 vbirduser4 vbirduser5
+		do
+			useradd -G vbirdgroup $username
+			echo "password"|passwd --stdin $username
+		done
+3、chgrp、chown、chmod三个命令分别是什么意思？每一种举出一个应用场景
+	chgrp 改变用户组
+	chown 改变文件所有者
+	chmod 改变文件的权限
+
+http://www.xiangya.com.cn/web/zj_info.aspx?id=677&chn=424
+
