@@ -4,8 +4,7 @@ date: 2017-12-10
 title: Android 小知识
 excerpt_separator: <!-- more -->
 ---
-<p>
-1、如何实现水波纹效果(ripple)?<!-- more -->
+<p>如何实现水波纹效果(ripple)?<!-- more -->
 	xml文件中实现
 		水波纹在视图内部
 		android:background="?selectableItemBackground"
@@ -17,7 +16,23 @@ excerpt_separator: <!-- more -->
 	from:https://stackoverflow.com/questions/26604134/how-to-achieve-ripple-animation-using-support-library
 	</p>
 
-<p>
-2、	Android architecture-components 使用：
+<p>	Android architecture-components 使用：
 	https://android.jlelse.eu/android-architecture-components-room-livedata-and-viewmodel-fca5da39e26b </p>
+
+<p>在自定义View的构造方法里面得到自定义View的自定义属性</p>
+<pre class="code">
+	if (attrs != null) {
+		TypeArray a = context.obtainStyledAttributes(attrs, CLIP_TO_PAADDING_ATTR, defStyle, 0);
+		...
+		a.recycle();// 这个千万别忘了
+	}
+</pre>
+<p>得到与UI相关的一些配置，超时，最小滑动距离等</p>
+<pre>
+	final ViewConfiguration vc = ViewConfiguration.get(context);
+	mTouchSlop = vc.getScaledTouchSlop();
+</pre>
+<p>RecyclerVIewPool的基本概念</p>
+<p>Recycler 类负责管理标记为报废(scrapped)或者已经分离(detached)的条目以便重用。</p>
+
 	
