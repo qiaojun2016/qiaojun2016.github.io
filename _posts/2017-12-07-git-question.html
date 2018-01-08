@@ -30,11 +30,12 @@ master 分支，执行git rebase <new_branch_name> 这就是说,如果发生了�
 但并没有覆盖本地工作区的内容。 origin/master 表示了一个远程分支，如果 git branch -r 没有查看到远程分支，要么没有设置远程仓库，要么
 设置了远程仓库，但是还没有与远程仓库交流过。所以，如果冷不丁的突然给本地的一个仓库设置了一个远端仓库，git branch -r 是看不到任何信息
 的，你必须git fetch 一下，进行第一次更新。origin/master 自然就会出现在本地了。话又说回来，git pull 又干了什么呢？git fetch ，然后
-执行其中的任何一个命令。<br>
+执行其中的任何一个命令。
 <ul>
 <li>git merge origin/master</li>
 <li>git rebase origin/master</li>
 <li>git cherry-pick origin/master</li>
+</ul>
 但是毕竟，同步远端分支内容到 本地是s个常用操作，于是git pull就诞生了。</p>
 <p>&nbsp;&nbsp;我们都知道在本地工作区初始化一个仓库的命令是 git init，但是值得注意的是此时还没有分支，master 也是不存在的。</p>
 <p>&nbsp;&nbsp;在使用Android Studio建立模块(module)或者新项目(project)的时候，项目或者模块的新目录下不出意外的情况下还会建立一个新的.gitignore文件
