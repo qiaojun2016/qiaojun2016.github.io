@@ -20,7 +20,7 @@ excerpt_separator: <!-- more -->
 <p>&nbsp;&nbsp;git rebase 也是用来合并分支的手段，项目中遇到一个这样的问题。赵总，在远端建立里仓库叫 web 然后让小陈把自己代码传到这个远端的仓库里面。
 然后小陈就在本地建立仓库，即在自己的工作区所在的文件夹执行git init ，git add . ，git commit. 。然后小陈添加了远端仓库，
 git remote add origin "remote_url" git push ,因为远端仓库是空的所以，可以直接git push。然后过来一会，小陈发现，自己上传的是旧的，新的
-在另一个文件夹里面，于是想把新的重新上传到远端。<br>
+在另一个文件夹里面，于是想把新的重新上传到远端。<br/>
 
 &nbsp;&nbsp;做法还是一样，在新的工作区 git init 、git add 、git commit 然后添加远端仓库，git remote add origin "remote url" 因为远程仓库已经
 有东西了，提交记录肯定与本地仓库不一致，这时候，需要先git fetch ，否则你git branch -r 看不到远程分支，这样当你执行完git fetch 
