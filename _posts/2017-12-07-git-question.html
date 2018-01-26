@@ -31,10 +31,26 @@ master 分支，执行git rebase <new_branch_name> 这就是说,如果发生了�
 设置了远程仓库，但是还没有与远程仓库交流过。所以，如果冷不丁的突然给本地的一个仓库设置了一个远端仓库，git branch -r 是看不到任何信息
 的，你必须git fetch 一下，进行第一次更新。origin/master 自然就会出现在本地了。话又说回来，git pull 又干了什么呢？git fetch ，然后
 执行其中的任何一个命令。
+
+
 <ul>
 <li>git merge origin/master</li>
 <li>git rebase origin/master</li>
 <li>git cherry-pick origin/master</li>
+<p>
+对于一件事，origin/master和本地master有什么区别？
+origin/master是远程仓库，在本地仓库的一个拷贝。
+与master一样，origin/master也是一个分支，并没有什么
+不同，我们强调过。git fetch 就是为了更新这个origin/master。
+而git pull 不仅仅是更新这个origin/master，而且还与当前本地的master分支合并。
+现在对于这样情景，我本地有一份代码piban，已经处于git的管理中，远程仓库也建立了叫做flap。并且是一个空的项目(但是有提交记录)，那么如何
+将代码放到远端呢？
+1、首先添加远端仓库 git remote add origin ...
+2、执行git fetch 将远程仓库master的拷贝到本地，也就是origin/master
+3、这个一步很重要，因为本地master 与 origin/master 显然不是同样的分支，提交历史明显不同。直接push 铁定有问题。
+于是rebase 就开始大显身手了。git rebase origin/master,然后本地当前的master分支提交记录，就跟在origin/master后面了。
+这样提交记录历史就一样了。
+</p>
 </ul>
 但是毕竟，同步远端分支内容到 本地是s个常用操作，于是git pull就诞生了。</p>
 <p>&nbsp;&nbsp;我们都知道在本地工作区初始化一个仓库的命令是 git init，但是值得注意的是此时还没有分支，master 也是不存在的。</p>
