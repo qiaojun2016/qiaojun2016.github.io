@@ -1,0 +1,25 @@
+---
+layout: post
+date: 2018-03-01
+title: Spring 基础解答？
+excerpt_separator: <!-- more -->
+---
+<h3>什么是Spring boot 的默认资源映射?</h3>
+<p>
+当访问一个网站的时候的相关资源，比如css文件，静态html文件，js文件等。应该去哪里找？
+比如http://localhost:8080/css/main.css 当你访问这个资源的时候，服务要去后台服务器的哪个
+文件夹里面找呢？默认资源映射，就是指的是这个css/man.css 文件要去服务器的哪个地方去找。
+spring boot 的默认资源映射，是将/** 映射到 /static （或/public、/resources、/META-INF/resources） 
+那么，/css/main.css 就是 /**的一种，也就是说会到 static/文件夹下找这个 css/main.css 文件。
+</p>
+
+<h3>数据库应该以root安装吗？个人用户如何安装数据库呢？</h3>
+<h3>利用jpa连接到postgresql数据库，create-drop 会干了什么？会自动创建spring boot 表吗</h3>
+<h3>如何开放centos端口号？</h3>
+<h3>TomcatEmbeddedServletContainerFactory 方法找不到？</h3>
+<p>spring boot 2.0 版本和1.5版本的部分包的结构发生了改变，比如EmbeddedServletContaine
+变成了WebServer，org.springframework.boot.context.embedded包被重构成了org.springframework.boot.web.embedded
+详情请看
+<a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M1-Release-Notes">Spring-Boot-2.0.0-M1-Release-Notes</a>
+
+</p>
