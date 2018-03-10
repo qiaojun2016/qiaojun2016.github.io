@@ -1,0 +1,19 @@
+https://opencamera.sourceforge.io/help.html#user_interface 
+https://stackoverflow.com/questions/2978095/android-camera-api-iso-setting/23567103  光圈
+
+https://developer.android.com/reference/android/hardware/camera2/CaptureRequest.html#SENSOR_SENSITIVITY
+https://www.cambridgeincolour.com/tutorials/camera-exposure.htm
+
+理解曝光(Exposure)
+实现正确的曝光，就像是要在一个桶里搜集雨水一样。对于雨水的下降速度是不可控制的。对于搜集雨水这件事，你所能控制
+的三个因素是：木桶的宽度，木桶在雨中的时间，你所想搜集雨水的份额。你仅仅需要确保，不要收集太少(曝光不足)，也不能
+太多(过度曝光)，关键在于你如何去组合这三个因素。宽度、时间、数量。
+在摄像中，曝光的设置包括：光圈(aperture) 速快门速度(shutter speed) ISO速度,就分别相当于搜集雨水中的木桶宽度、时间、雨水的数量。
+
+在曝光的三个设置中，控制的部分是不同的：
+光圈(aperture):控制光线摄入相机内部的面积。
+快门的速度(shutter speed) 控制着曝光时间。
+ISO 速度:控制着照相机传感器对一定数量的光线的敏感度。
+
+通过组合这三种设置可以达到同样的曝光效果。但是每一种设置，也会影响图片的其他的属性。
+

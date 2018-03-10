@@ -4,45 +4,55 @@ date: 2017-12-7
 title: git 使用小问题
 excerpt_separator: <!-- more -->
 ---
-<p>
-1、使用git 的时候，可以忽略某些文件。即在.gitignore中增加需要忽略的文件<!-- more -->。但是如果之前提交过该文件，即文件
+<p>&nbsp;&nbsp;使用git 的时候，可以忽略某些文件。即在.gitignore中增加需要忽略的文件<!-- more -->。但是如果之前提交过该文件，即文件
 位于暂存区，说明已经被跟踪。为了使得.gitignore新添加的忽略文件生效。我们需要删除暂存区的跟踪。
 使用命令：git rm --cached 。然后重新提交。有一点，虽然提交后推到远端，但是你小伙伴的本地代码暂存去里面，可能还
 保留，所以，他也需要执行 git rm --cached，删除暂存区域。然后重新提交。否则，他提交之后会出错。
 说了这么多，就是说所有修改此代码的人，都要执行git rm --cached删除暂存区域。然后重新提交。否则，他提交之后会出错。
-因此 git rm --cached做了什么呢？
-</p>
+因此 git rm --cached做了什么呢？</p>
 
-<p>
-2、其实git 其实对3棵树操作，这里的树可不像队列、栈那种数据结构。而是三个文件集合。第一个文件集合就是你的本地工作目录。
+<p>&nbsp;&nbsp;其实git 其实对3棵树操作，这里的树可不像队列、栈那种数据结构。而是三个文件集合。第一个文件集合就是你的本地工作目录。
 在这里，就是你实实在在操作的文件。第二个我们称之为暂存区。通俗一点，当时使用 git add <file_name> 命令的时候，就是将这个文件放入暂存区。
 第三个就是本地仓库了。也就是git commit <file_name> 之后，就把该文件放到仓库。三个文件集合是:本地git仓库、暂存区、本地工作区。
 那么，git rm --cached <file_name> 就是删除暂存区里面的东西。通过这个命令，可以使得相应的文件，不会被git跟踪记录，因为git的作用就是记录
-你每一次对文件修改的记录。
-</p>
+你每一次对文件修改的记录。</p>
 
-<p>
-git rebase 也是用来合并分支的手段，项目中遇到一个这样的问题。赵总，在远端建立里仓库叫 web 然后让小陈把自己代码传到这个远端的仓库里面。
+<p>&nbsp;&nbsp;git rebase 也是用来合并分支的手段，项目中遇到一个这样的问题。赵总，在远端建立里仓库叫 web 然后让小陈把自己代码传到这个远端的仓库里面。
 然后小陈就在本地建立仓库，即在自己的工作区所在的文件夹执行git init ，git add . ，git commit. 。然后小陈添加了远端仓库，
 git remote add origin "remote_url" git push ,因为远端仓库是空的所以，可以直接git push。然后过来一会，小陈发现，自己上传的是旧的，新的
-在另一个文件夹里面，于是想把新的重新上传到远端。
+在另一个文件夹里面，于是想把新的重新上传到远端。<br/>
 
-做法还是一样，在新的工作区 git init 、git add 、git commit 然后添加远端仓库，git remote add origin "remote url" 因为远程仓库已经
+&nbsp;&nbsp;做法还是一样，在新的工作区 git init 、git add 、git commit 然后添加远端仓库，git remote add origin "remote url" 因为远程仓库已经
 有东西了，提交记录肯定与本地仓库不一致，这时候，需要先git fetch ，否则你git branch -r 看不到远程分支，这样当你执行完git fetch 
 你就看到了远程分支origin/master 然后在本地执行git checkout -b <new_branch_name> origin/master 跟踪这个远端分支。然后跳回原来的
-master 分支，执行git rebase <new_branch_name> 这就是说,如果发生了冲突，就解决冲突，然后git add 然后git rebase --continue 。
-</p>
-<p>
-git pull 干了什么？git pull 的工作就是将远程仓库更新到本地仓库，然后覆盖本地的文件。git fetch 仅仅是把远程仓库的内容更新到本地仓库。
+master 分支，执行git rebase <new_branch_name> 这就是说,如果发生了冲突，就解决冲突，然后git add 然后git rebase --continue 。</p>
+<p>&nbsp;&nbsp;git pull 干了什么？git pull 的工作就是将远程仓库更新到本地仓库，然后覆盖本地的文件。git fetch 仅仅是把远程仓库的内容更新到本地仓库。
 但并没有覆盖本地工作区的内容。 origin/master 表示了一个远程分支，如果 git branch -r 没有查看到远程分支，要么没有设置远程仓库，要么
 设置了远程仓库，但是还没有与远程仓库交流过。所以，如果冷不丁的突然给本地的一个仓库设置了一个远端仓库，git branch -r 是看不到任何信息
 的，你必须git fetch 一下，进行第一次更新。origin/master 自然就会出现在本地了。话又说回来，git pull 又干了什么呢？git fetch ，然后
-执行其中的任何一个命令。<br>
-git merge origin/master<br>
-git rebase origin/master <br>
-git cherry-pick origin/master<br>
-但是毕竟，同步远端分支内容到 本地是s个常用操作，于是git pull就诞生了。
-</p>
+执行其中的任何一个命令。
+
+
+<ul>
+<li>git merge origin/master</li>
+<li>git rebase origin/master</li>
+<li>git cherry-pick origin/master</li>
 <p>
-	我们都知道在本地工作区初始化一个仓库的命令是 git init，但是值得注意的是此时还没有分支，master 也是不存在的。
+对于一件事，origin/master和本地master有什么区别？
+origin/master是远程仓库，在本地仓库的一个拷贝。
+与master一样，origin/master也是一个分支，并没有什么
+不同，我们强调过。git fetch 就是为了更新这个origin/master。
+而git pull 不仅仅是更新这个origin/master，而且还与当前本地的master分支合并。
+现在对于这样情景，我本地有一份代码piban，已经处于git的管理中，远程仓库也建立了叫做flap。并且是一个空的项目(但是有提交记录)，那么如何
+将代码放到远端呢？
+1、首先添加远端仓库 git remote add origin ...
+2、执行git fetch 将远程仓库master的拷贝到本地，也就是origin/master
+3、这个一步很重要，因为本地master 与 origin/master 显然不是同样的分支，提交历史明显不同。直接push 铁定有问题。
+于是rebase 就开始大显身手了。git rebase origin/master,然后本地当前的master分支提交记录，就跟在origin/master后面了。
+这样提交记录历史就一样了。
 </p>
+</ul>
+但是毕竟，同步远端分支内容到 本地是s个常用操作，于是git pull就诞生了。</p>
+<p>&nbsp;&nbsp;我们都知道在本地工作区初始化一个仓库的命令是 git init，但是值得注意的是此时还没有分支，master 也是不存在的。</p>
+<p>&nbsp;&nbsp;在使用Android Studio建立模块(module)或者新项目(project)的时候，项目或者模块的新目录下不出意外的情况下还会建立一个新的.gitignore文件
+比如在工程下建立了一个camera模块，那么在该模块下就会有一个.gitignore 里面有/build。因此就不用在工程根目录下的.gitignore文件里添加camera/build忽略文件了</p>
