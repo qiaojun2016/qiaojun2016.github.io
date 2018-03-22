@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2018-03-01
-title: Spring 基础解答？
+title: Spring基础问题总结
 excerpt_separator: <!-- more -->
 ---
 <h3>什么是Spring boot 的默认资源映射?</h3>
@@ -19,7 +19,14 @@ spring boot 的默认资源映射，是将/** 映射到 /static （或/public、
 <h3>TomcatEmbeddedServletContainerFactory 方法找不到？</h3>
 <p>spring boot 2.0 版本和1.5版本的部分包的结构发生了改变，比如EmbeddedServletContaine
 变成了WebServer，org.springframework.boot.context.embedded包被重构成了org.springframework.boot.web.embedded
-详情请看
-<a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M1-Release-Notes">Spring-Boot-2.0.0-M1-Release-Notes</a>
-
-</p>
+详情请看<a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M1-Release-Notes">
+Spring-Boot-2.0.0-M1-Release-Notes</a></p>
+<h3>详细描述一下SecurityConstraint在Tomcat的作用,以及如何在Spring boot中实现对http 到https的重定向？</h3>
+<p>tomcat 是一个web容器，它是如何确定需要客户端提供ssl的？如果不是ssl 是如何禁止访问的？这应该是和SecurityConstraint
+的设置有关系，请简单描述一下</p>
+<h3>spring mvc Suffix match（后缀匹配） 问题</h3>
+<p>后缀匹配(Suffix match)在spring mvc 中是默认开启的，比如你把你的控制器映射到/person,也就是@Controller("/person")，也就默认
+映射到/person.*，这里扩展的名字(.* 这个部分)可以用来解释出请求数据的类型，比如.json 就表示，请求的是一个json类型的数据，于是。
+在服务器响应的时候，返回类型就是application/json。但是在spring boot 2.0.0中这个给后缀匹配被关闭了。如果你想明确给客户端返回特定的数据
+类型，可以在映射控制器注解中这么写 @GetMapping(path = "/pets/{petId}", produces = "application/json;charset=UTF-8")，这就表示我服务器
+响应的数据类型是"application/json"的. <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-requestmapping-suffix-pattern-match">Spring mvc Suffix match</a></p>

@@ -1,0 +1,92 @@
+Evolution of MVP Presenter implementation for Android
+
+我在我的所有的Android Projects里面使用MVP模式。在MVP模式中的一个重要的讨论，
+如何实现正确的生命周期。也就是在P中实现相关的具体的Android周期方法，然后再合适的位置
+进行调用。
+
+interface MainView{}
+class MainPresenter(val view:MainView){
+	fun onCreateActivity() {
+		// do some
+	}
+}
+
+class MainActivity:Activity(),MainView {
+	private val presenter = MainPresenter(this)
+	
+	override fun onCreate(saveInstanceState:Bundle?) {
+		super.onCreate(saveInstanceState)
+		presenter.onCreateActivity()
+	}
+}
+
+这样做的优点就是，我们明确的定义了需要在生命周期中调用的方法。
+但是缺点也是有的。我们必须明确的在Activity中调用生命周期的方法。
+为了解决，我们可以写一个Presenter 接口。
+
+interface Presenter {
+	fun onCreate(){}
+	fun onStart(){}
+	fun onDestory(){}
+	fun onStop(){}
+	fun onResume(){}
+	
+}
+
+然后在BaseActivityWithPrsenter 中进行调用
+
+abstract class BaseActivityWithPresenter:BaseActivity(),
+PresenterView {
+	abstract val presenter:Presenter
+	
+	override fun onCreate(saveInstanceState:Bundle) {
+		super.onCreate(saveInstanceState)
+		presenter.onCreate()
+		}
+	override fun onStart() {
+		super.onStart()
+		presenter.onStart()
+	}
+	override fun onResume() {
+		super.onResume()
+		presenter.onResume()
+	}
+	..
+}
+
+
+更大的 优点在于我们可以抽取Prsenter 的公共的行为到另外一个类中。
+
+abstract class RXPrsenter:Presenter {
+	operator fun CompositeDisposable.plusAssign(disposable:Disposable) {
+		add(disposable)
+	}
+	
+	var subscriptions = CompositeDisposable()
+	override fun onDestory() {
+	subscriptions.dispose()
+	}
+}
+
+这样，我们在Presenter里面使用RxJava更加简单，并且可以确定。
+所有的订阅，都会在Activity 被销毁的时候遗弃。
+
+比如这样写
+
+interface MainView {
+	fun showUserData(user:User)
+}
+
+class MainPresenter(private val view:MainView) :RXPrsenter() {
+	private val userRespository by UserRepository.lazyGet()
+	
+	override fun onCreate() {
+		subscriptions += userRespository.getUser()
+			.applySchedulers()
+			.subscribe(view::showUserData)
+
+	}
+}
+
+并且，如果有一些共同的行为，比如错误处理。我们可以在BaseActivity里面进行实现。
+
