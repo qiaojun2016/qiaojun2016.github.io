@@ -1,0 +1,51 @@
+---
+layout: post
+date: 2018-03-30
+title: 在ubuntu16.04安装中文输入法
+excerpt_separator: <!-- more -->
+---
+<h2>在Ubuntu16.04 TLS 上安装中文输入法（安装搜狗输入法）</h2>
+<p>1、首先检查是否有fcitx键盘输入法系统，检查如下：</p>
+<img src="../img/Inked20180330111604_LI.jpg" style="width:600px;height:350px"/>
+<p>我的原来是没有fcitx的，是后来安装上的。上面部分是语言选择，这个其实和输入法没有什么关系。</p><!-- more -->
+<img src="../img/Inked20180330112125_LI.jpg" style="width:600px;height:350px"/>
+<h3>安装fcitx</h3>
+<div>
+	<ul>
+		<li>sudo add-apt-repository ppa:fcitx-team/nightly</li>
+		<li>sudo apt-get update</li>
+		<li>sudo apt-get install fcitx</li>
+		<li>sudo apt-get install fcitx-config-gtk</li>
+		<li>sudo apt-get install fcitx-table-all</li>
+		<li>sudo apt-get install im-switch</li>
+	<ul>
+	
+</div>
+<p>检查一下是否安装成功</p>
+<img src="../img/Inked20180330113553_LI.jpg" style="width:600px;height:350px"/>
+<p>出现这个fcitx-configuration 这几个就行了，等会这个fcitx-configuration才要真要配置搜狗等输入法。</p>
+<h3>下载搜狗输入法</h3>
+<p><a href="https://pinyin.sogou.com/linux/?r=pinyin">搜狗输入法 for linux</a></p>
+<img src="../img/Inked20180330114511_LI.jpg" style="width:600px;height:350px"/>
+<p>安装过程中出现下面的错误，不用管。</p>
+<img src="../img/Inked20180330115047_LI.jpg" style="width:600px;height:350px"/>
+<p>到系统设置->语言支持，将键盘输入法系统设置为fcitx,其他的像上面的language就不用管了，其实就是系统语言设置。</p>
+<img src="../img/Inked20180330115623_LI.jpg" style="width:600px;height:350px"/>
+<p>最重要的来了，设置fcitx输入系统后，最重要的步骤来了，重启系统或者称为注销。</p>
+<p>搜索fcitx然后点击fcitx-configuration 进入下面的画面:</p>
+<img src="../img/Inked20180330141315_LI.jpg" style="width:600px;height:350px; margin-bottom:16px"/><br>
+<img src="../img/InkedInked20180330141732_LI.jpg"  style="width:600px;height:350px"/>
+<p>你第一次打开的时候会没有sougou输入只有默认的英文输入，也可能什么都没有。所以要添加，如上图，点击+号弹出：
+</p>
+<img src="../img/Inked20180330143401_LI.jpg"  style="width:600px;height:350px"/>
+<p>搜索到sougou 输入法，然后点击add，添加进去。如果你没有找到搜狗输入法。那么久把红色勾选去掉。然后再找。
+<br>重启电脑之后你就可以ctrl+space自由切换了。</p>
+
+
+
+
+
+
+
+
+
