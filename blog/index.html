@@ -3,18 +3,24 @@ layout: default
 title: 桥小白的博客
 ---
 <!-- This loops through the paginated posts -->
-{% for post in paginator.posts %}
-  <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
-<!--
-  <p class="author">
-    <span class="date">{{ post.date|date:"%-m/%-d/%y" }}</span>
-  </p>
--->
+<header class="w3-container w3-center  w3-red w3-padding-32"> 
+  <h1 class="w3-margin w3-xxlarge">桥小白</h1>
+  <p class="w3-wide">欢迎来到<span class="w3-tag">桥小白</span>的博客</p>
+</header>
 
-  <div class="content">
-    {{ post.excerpt }}...
-  </div>
+{% for post in paginator.posts %}
+<div class="w3-card-4 w3-margin w3-white">
+	<div class="w3-container">
+	<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+	<h5>Title Description，<span class="w3-opacity">Apri 7,2014</h5>
+	</div>
+	<div class="w3-container">
+	{{ post.excerpt }}...
+	</div>
+</div>
 {% endfor %}
+
+
 
 <!-- Pagination link -->
 {% if paginator.total_pages > 1 %}
