@@ -15,8 +15,17 @@ title: 桥小白的博客
 	<h5>Title Description，<span class="w3-opacity">Apri 7,2014</h5>
 	</div>
 	<div class="w3-container">
-	{{ post.excerpt }}...
+	{{ post.excerpt }}
 	</div>
+	
+	<div class="w3-row">
+		<div class="w3-col m8 s12">
+          <p><button class="w3-button w3-padding-large w3-white w3-border"><b>READ MORE »</b></button></p>
+        </div>
+        <div class="w3-col m4 w3-hide-small">
+          <p><span class="w3-padding-large w3-right"><b>Comments  </b> <span class="w3-tag">0</span></span></p>
+        </div>
+      </div>
 </div>
 {% endfor %}
 
@@ -24,27 +33,27 @@ title: 桥小白的博客
 
 <!-- Pagination link -->
 {% if paginator.total_pages > 1 %}
-<div class="pagination">
+<div class="w3-bar">
   {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; 上一个</a>
   {% else %}
-    <span>&laquo; Prev</span>
+    <span class="w3-button w3-hover-orange">&laquo; <<</span>
   {% endif %}
 
   {% for page in (1..paginator.total_pages) %}
     {% if page == paginator.page %}
       <em>{{ page }}</em>
     {% elsif page == 1 %}
-      <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+      <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="w3-button w3-hover-red">{{ page }}</a>
     {% else %}
-      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}"  class="w3-button w3-hover-red">{{ page }}</a>
     {% endif %}
   {% endfor %}
 
   {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="w3-button w3-hover-orange"> >> &raquo;</a>
   {% else %}
-    <span>Next &raquo;</span>
+    <span class="w3-button w3-hover-orange"> >> &raquo;</span>
   {% endif %}
 </div>
 {% endif %}
