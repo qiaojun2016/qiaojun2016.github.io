@@ -35,9 +35,9 @@ title: 桥小白的博客
 {% if paginator.total_pages > 1 %}
 <div class="w3-bar">
   {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; 上一个</a>
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; «</a>
   {% else %}
-    <span class="w3-button w3-hover-orange">&laquo; <<</span>
+    <span class="w3-button w3-hover-orange">&laquo; « </span>
   {% endif %}
 
   {% for page in (1..paginator.total_pages) %}
@@ -51,9 +51,9 @@ title: 桥小白的博客
   {% endfor %}
 
   {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="w3-button w3-hover-orange"> >> &raquo;</a>
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="w3-button w3-hover-orange">  » &raquo;</a>
   {% else %}
-    <span class="w3-button w3-hover-orange"> >> &raquo;</span>
+    <span class="w3-button w3-hover-orange">»&raquo;</span>
   {% endif %}
 </div>
 {% endif %}
