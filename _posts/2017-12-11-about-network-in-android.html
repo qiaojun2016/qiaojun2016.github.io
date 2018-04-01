@@ -4,39 +4,54 @@ date: 2017-12-7
 title: Android 网络
 excerpt_separator: <!-- more -->
 ---
+<div class="w3-panel w3-border w3-light-grey w3-round-large">
 <p>
-	网络框架就是为了 发出请求得到对应 json 字符串。
+	网络框架就是为了 发出请求得到对应 json 字符串。我其实在发牢骚，因为我是初学者，在选择网络框架时候一直在纠结
+	哪个好，简直就是浪费时间，哪个框架都是好的。不要把太多时间放到选择框架上，框架都是那样。<b>业务逻辑</b> 才是关键。
+	现在okHttp和retrofit等无论选哪样一个也就是发一发json串而已，没有什么了不起的。
 </p>
-<p>
-how to implement it ？这么多框架，总要选一个集成到自己的项目当中去。
-</p>
-<ul>
-	<li>选择一个合适的请求类库，（OkHttp、Volley，Retrofit）</li>
-	<li>写接口回调方法,一般情况下都要有。</li>
-	<li>基本的请求参数，超时时间、编码、等。</li>
+</div>
+<!-- more -->
+
+<div class="w3-container">
+
+<h4 class="w3-large"><b>how to implement it?</b></h4>
+
+
+<ul class="w3-ul w3-border">
+	<li>选择一个合适的请求类库，(OkHttp、Volley，Retrofit)</li>
+	<li>写接口回调方法,一般情况下都要有</li>
+	<li>基本的请求参数，超时时间、编码、等</li>
 	<li>现在一般都是返回一个Json 字符串</li>
 </ul>
-
-<p>
-于是选择 使用OkHttp 作为网络请求库
-我很是纠结啊 ，怎么开始，的那个了去。
-OkHttpClient 
-</p>
-<div>
-	<p>json 串解析？可以用Fastjson 常用方法如下</>
-	<pre class="code">
-	public static final Object parse(String text);  //把JSON文本parse为JSONObject或者JSONArray    
-	public static final JSONObject parseObject(String text)；  //把JSON文本parse成JSONObject  
-	public static final  T parseObject(String text, Class clazz);  // 把JSON文本parse为JavaBean  
-	public static final JSONArray parseArray(String text);  //把JSON文本parse成JSONArray  
-	public static final  List parseArray(String text, Class clazz);  //把JSON文本parse成JavaBean集合  
-	public static final String toJSONString(Object object);  //将JavaBean序列化为JSON文本  
-	public static final String toJSONString(Object object,  boolean prettyFormat); //将JavaBean序列化为带格式的JSON文本  
-	public static final Object toJSON(Object javaObject);  //将JavaBean转换为JSONObject或者JSONArray
-	</pre>
 </div>
-<div>
-<h5>Http基础<h5/>
+
+<p class="w3-margin-left">
+于是选择 使用OkHttp 作为网络请求库
+我很是纠结啊，怎么开始，我的那个了去。
+<code class="w3-codespan">OkHttpClient</code> 
+</p>
+
+<div class="w3-container">
+	<h4 class="w3-large"><b>json 串解析</b></h4>
+	<div class="w3-light-grey w3-card w3-panel">
+	<p>可以用 Fastjson 常用方法如下</p>
+		<div class="w3-code">
+			public static final Object parse(String text);  //把JSON文本parse为JSONObject或者JSONArray<br>
+			public static final JSONObject parseObject(String text)；  //把JSON文本parse成JSONObject<br> 
+			public static final  T parseObject(String text, Class clazz);  // 把JSON文本parse为JavaBean <br>
+			public static final JSONArray parseArray(String text);  //把JSON文本parse成JSONArray<br> 
+			public static final  List parseArray(String text, Class clazz);  //把JSON文本parse成JavaBean集合<br>
+			public static final String toJSONString(Object object);  //将JavaBean序列化为JSON文本<br>
+			public static final String toJSONString(Object object,  boolean prettyFormat); //将JavaBean序列化为带格式的JSON文本<br>  
+			public static final Object toJSON(Object javaObject);  //将JavaBean转换为JSONObject或者JSONArray<br>
+		</div>
+	</div>
+</div>
+
+
+<div class="w3-container">
+	<h4 class="w3-large"><b>Http协议基础</b></h4>
 
 	
 </div>

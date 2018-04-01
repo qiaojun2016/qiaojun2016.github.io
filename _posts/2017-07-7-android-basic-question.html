@@ -4,37 +4,52 @@ date: 2017-12-10
 title: Android 小知识
 excerpt_separator: <!-- more -->
 ---
-<h3>如何实现水波纹效果(ripple)?</h3><!-- more -->
-	<p>xml文件中实现</p>
-		<pre class="code">
-		水波纹在视图内部
-		android:background="?selectableItemBackground"
-		水波纹超过视图边界
-		android:background="?selectableItemBackgroundBorderless
-		</pre>
-		<p>?attr: 是?的缩写，代替?android:attr ,这样就可以引用support library 从而支持到API 7<br>
-		from:https://stackoverflow.com/questions/26604134/how-to-achieve-ripple-animation-using-support-library
+<div class="w3-container">
+<h4 class="we-large"><b>如何实现水波纹效果(ripple)?</b></h4>
+
+<div class="w3-panel w3-card w3-light-grey">
+  <p><b>xml文件中实现</b></p>
+  <div class="w3-code notranslate">
+   android:background="?selectableItemBackground"//水波纹在视图内部<br>
+   android:background="?selectableItemBackgroundBorderless"//水波纹超过视图边界<br>
+  </div>
+</div>
+	<p><code class="w3-codespan">?attr:</code>是<code class="w3-codespan">?</code>的缩写，代替<code class="w3-codespan">?android:attr</code> ,这样就可以引用<code class="w3-codespan">support library</code>从而支持到 <span class="w3-tag w3-round">API 7 </span>
+		<br><a  class="w3-text-blue"href="https://stackoverflow.com/questions/26604134/how-to-achieve-ripple-animation-using-support-library">如何实现水波纹效果？</a>
 		</p>
 
 
-<h3>
-<a href="https://android.jlelse.eu/android-architecture-components-room-livedata-and-viewmodel-fca5da39e26b" style="text-decoration:none;">Android architecture-components 使用</a><h3>
-	
+</div><!-- more -->
 
-<h3>在自定义View的构造方法里面得到自定义View的自定义属性</h3>
-<pre class="code">
-	if (attrs != null) {
-		TypeArray a = context.obtainStyledAttributes(attrs, CLIP_TO_PAADDING_ATTR, defStyle, 0);
-		...
-		a.recycle();// 这个千万别忘了
-	}
-</pre>
-<h3>得到与UI相关的一些配置，超时，最小滑动距离等</h3>
-<pre class="code">
-	final ViewConfiguration vc = ViewConfiguration.get(context);
+<div class="w3-container w3-margin-top">
+<h4 class="we-large"><b>Android architecture-components</b></h4>
+<p><a class="w3-text-blue" href="https://android.jlelse.eu/android-architecture-components-room-livedata-and-viewmodel-fca5da39e26b" style="text-decoration:none;">Android architecture-components 使用</a></p>
+</div>
+
+
+	
+<div class="w3-container w3-margin-top">
+<h4 class="we-large"><b>代码片段</b></h4>
+<div class="w3-panel w3-card w3-light-grey">
+<p>在自定义View的构造方法里面得到自定义View的自定义属性</p>
+<div class="w3-code notranslate">
+  if (attrs != null) {<br>
+		TypeArray a = context.obtainStyledAttributes(attrs, CLIP_TO_PAADDING_ATTR, defStyle, 0);<br>
+		...<br>
+		a.recycle();// 这个千万别忘了<br>
+	}<br>
+</div>
+<p>得到与UI相关的一些配置，超时，最小滑动距离等</p>
+<div class="w3-code notranslate">
+ 	final ViewConfiguration vc = ViewConfiguration.get(context);<br>
 	mTouchSlop = vc.getScaledTouchSlop();
-</pre>
-<h3>RecyclerVIewPool的基本概念</h3>
-<p>Recycler 类负责管理标记为报废(scrapped)或者已经分离(detached)的条目以便重用。</p>
+</div>
+</div>
+</div>
+	
+<div class="w3-container w3-margin-top">
+<h4 class="we-large"><b>RecyclerViewPool的基本概念</b></h4>
+<p>Recycler 类负责管理标记为报废(scrapped)或者已经分离(detached)的条目以便重用</p>
+</div>
 
 	

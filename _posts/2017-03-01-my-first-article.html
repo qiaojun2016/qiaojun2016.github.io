@@ -5,53 +5,97 @@ title: 一个Inflate引发的思考
 excerpt_separator: <!-- more -->
 ---
 
-<p>今天项目中需要使用<span class="keyword">RecycleView</span>，但是我差不多已经忘了该如何使用了。
-    <!-- more -->作为代码的搬运工，我迅速从网上找到了模板，三两下把代码给折腾完了。然后我自己根据需求写了个简单的<span class="keyword">item.xml</span>大概这么写的:</p> 
+<p class="w3-margin-left">今天项目中需要使用<code class="w3-codespan">RecycleView</code>，但是我差不多已经忘了该如何使用了。
+作为代码的搬运工，我迅速从网上找到了模板，三两下把代码给折腾完了。<!-- more --> 然后我自己根据需求写了个简单的 
+<span class="w3-tag w3-round"> item.xml </span>大概这么写的</p>
 
-<pre class="code">
-&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"   
-    android:layout_width="match_parent"  
-    android:layout_height="96dp"&gt;    
-    &lt;ImageView   
-        android:layout_centerInParent="true"  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content"   
-        android:src="@drawable/icon_camera"    
-        /&gt;  
-&lt;/RelativeLayout&gt; 
+<div class="w3-panel w3-card w3-light-grey">
+    <h4>Android Xml Code</h4>
+    <div class="w3-code htmlHigh">
+        &lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"<br>
+        android:layout_width="match_parent"<br>
+        android:layout_height="96dp"&gt;<br><br>
+        &lt;ImageView<br>
+        android:layout_centerInParent="true" <br>
+        android:layout_width="wrap_content" <br>
+        android:layout_height="wrap_content"<br>
+        android:src="@drawable/icon_camera"/&gt; <br> <br>
+        &lt;RecyclerView <br>
+        android:id="@+id/recycler"<br>
+        android:layout_width="match_parent" <br>
+        android:layout_height="96dp"&gt; <br>
+        &lt;/RecyclerView&gt;<br> <br>
+        &lt;/RelativeLayout&gt; <br>
+    </div>
+</div>
 
-&lt;RecyclerView    
-        android:id="@+id/recycler"   
-        android:layout_width="match_parent"  
-        android:layout_height="96dp"&gt;   
-&lt;/RecyclerView&gt;
-</pre>
-<p>在<span class="keyword">onCreateViewHolder</span>中(我使用的是<span class="keyword">LinearLayoutManager，横向布局):</p>
-<pre class="code">View view = LayoutInflater.from(context).inflate(R.layout.item,null);</pre>
-<p>但是问题出现了，假如你也实验了，你就会发现每个item都没有垂直居中显示，我的意思是说，按照我当前的理解，因为我的<span class="keyword">RecyclerView</span>刚刚设置了高度<span class="keyword">96dp</span>，而我的  <span class="keyword">item</span>的高度也是<span class="keyword">96dp</span>，那么我的<span class="keyword">ImageView</span>又设置了<span class="keyword">layout_centerInParent = true</span>属性，根据正常逻辑，必须垂直居中的。后来我把<span class="keyword">item</span>的高度改<span class="keyword">match_parent</span>然 而并没有什么卵用，所以我就怀疑<span class="keyword">item</span>的这个<span class="keyword">RelativeLayout</span>的高度和宽度根本就没有用到。</p>
-<p>那么问题出在哪呢？我直接说出来大家看看这个是不是有问题:</p>
-<pre class="code">View view = LayoutInflater.from(context).inflate(R.layout.item, null);
-View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);</pre>
+<p>在<code class="w3-codespan">onCreateViewHolder</code>中(我使用的是<code class="w3-codespan">LinearLayoutManager</code>
+ 横向布局)</p>
+<code class="w3-codespan">View view = LayoutInflater.from(context).inflate(R.layout.item,null);</code>
+<p>但是问题出现了，假如你也实验了，你就会发现每个<code class="w3-codespan">item</code>都没有垂直居中显示，
+    我的意思是说，按照我当前的理解，因为我的<code class="w3-codespan">RecyclerView</code>刚刚设置了高度
+    <code class="codespan">96dp</code>，而我的<code class="codespan">item</code>的高度也是<code class="w3-codespan">96dp</code>，
+    那么我的<code class="w3-codespan">ImageView</code>又设置了<code class="w3-codespan">layout_centerInParent = true</code>属性，
+    根据正常逻辑，必须垂直居中的。后来我把<code class="w3-codespan">item</code>的高度改<code class="w3-codespan">match_parent</code>
+    然而并没有什么卵用，所以我就怀疑<code class="w3-codespan">item</code>的这个<code class="w3-codespan">RelativeLayout</code>的高度和
+    宽度根本就没有用到。</p>
+<p>那么问题出在哪呢？我直接说出来大家看看这个是不是有问题</p>
 
-<p>首先这个<span class="keyword">parent</span>我用的是<span class="keyword">onCreateViewHolder</span> 传递过来的参数。这个<span class="keyword">parent</span>参数的含义，相比大家都知道了。如果不知道,那么就自己查看源码吧</p>
-<p>方法签名如下:</p>
-<pre class="code">public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean attachToRoot)</pre>
-<p>返回的视图类型肯定是<span class="keyword">R.layout.item</span>的根布局类型，比如我们的这个根布局是<span class="keyword">RelativeLayout</span>那么返回的就是<span class="keyword">RelativeLayout</span>类型，然而不同之处就在于返回的这个视图是否已经设置过他的<span class="keyword">LayoutParams</span>。不管<span class="keyword">attachToRoot</span> 是否为真，只要<span class="keyword">root</span>存在，且不为空，那么就会为返回的视图(这里的<span class="keyword">RelativeLayout</span>)设置它自己默认生成的<span class="keyword">LayoutParams</span>。而<span class="keyword">attachToParent</span>的作用就在于，是否将这个视图作为子视图添加到<span class="keyword">parent</span>上。</p>       
-<p>于是，现在大家想一下这样一个问题，我的<span class="keyword">ImageView</span>它的<span class="keyword">layout_height</span>和<span class="keyword">layout_width</span>是给谁使用的？都知道是用来设置<span class="keyword">ImageView</span>的高度和宽度的。所以我对这俩属性的定义就是："这俩属性是用来设置其在父控件中的高度和宽度的，如果没有了父控件，那么这些高度和宽度将没有意义"。在属性的命名上不知发现了没有，为什么是<span class="keyword">layout_</span> 开头的呢，而不是<span class="keyword">android:width</span> 明显这是有意义，说明是与父控件相关的，或者说父控件需要这个值。</p>   
-<p>回到原来的问题bug，也就是inflate的问题，我简单的看了一下inflate的源码，基本过程如下: </p> 
-<ul class="steps">
-<li>创建视图的根布局(这里就是<span class="keyword">RelativeLayout</span>)。</li>  
-<li>如果<span class="keyword">parent</span>是存在的，就用<span class="keyword">parent</span>返回一个<span class="keyword">LayoutParams</span>,给这个根布局(<span class="keyword">RelativeLayout</span>)使用，不存在就不会设置。并且<span class="keyword">attachToRoot</span>为<span class="keyword">true</span>那么就把根布局添加到<span class="keyword">parent</span>，否则就不添加。</li>  
-<li>递归创建<span class="keyword">childView</span>。</li> 
+<div class="w3-panel w3-card w3-light-grey">
+    <div class="w3-code jsHigh notranslate">
+        View view = LayoutInflater.from(context).inflate(R.layout.item, null);<br>
+        View view = LayoutInflater.from(context).inflate(R.layout.item,parent, false);<br>
+    </div>
+</div>
+
+<p>首先这个<code class="w3-codespan">parent</code>我用的是<code class="w3-codespan">onCreateViewHolder</code> 传递过来的参数。
+    这个<code class="w3-codespan">parent</code>参数的含义，相比大家都知道了。如果不知道,那么就自己查看源码吧</p>
+<p>方法签名如下</p>
+<code class="w3-codespan" style="overflow-x:scroll;">public View inflate(@LayoutRes int resource, @Nullable ViewGroup
+    root, boolean attachToRoot)</code>
+<p>返回的视图类型肯定是<code class="w3-codespan">R.layout.item</code>的根布局类型，比如我们的这个根布局是<code class="w3-codespan">RelativeLayout</code>
+    那么返回的就是<code class="w3-codespan">RelativeLayout</code>类型，然而不同之处就在于返回的这个视图是否已经设置过他的<code class="w3-codespan">LayoutParams</code>。
+    不管<code class="w3-codespan">attachToRoot</code> 是否为真，只要<code class="codespan">root</code>存在，且不为空，
+    那么就会为返回的视图(这里的<code class="w3-codespan">RelativeLayout</code>)
+    设置它自己默认生成的<code class="w3-codespan">LayoutParams</code>。而<code class="w3-codespan">attachToParent</code>的作用就在于，
+    是否将这个视图作为子视图添加到<code class="w3-codespan">parent</code>上。</p>
+<p>于是，现在大家想一下这样一个问题，我的<code class="w3-codespan">ImageView</code>它的<code class="w3-codespan">layout_height</code>和<code
+        class="w3-codespan">layout_width</code>是给谁使用的？都知道是用来设置<code class="w3-codespan">ImageView</code>的高度和宽度的。
+    所以我对这俩属性的定义就是 <b>这俩属性是用来设置其在父控件中的高度和宽度的</b>，如果没有了父控件，那么这些高度和宽度将没有意义"。在属性的命名上不知发现了没有，为什么是<span class="keyword">layout_</span>
+    开头的呢，而不是<span class="keyword">android:width</span> 明显这是有意义，说明是与父控件相关的，或者说父控件需要这个值。</p>
+<p>回到原来的问题 bug，也就是 inflate 的问题，我简单的看了一下inflate的源码，基本过程如下 </p>
+<ul class="w3-ul w3-border w3-white">
+    <li>创建视图的根布局(这里就是<code class="w3-codespan">RelativeLayout</code>)。</li>
+    <li>如果<code class="w3-codespan">parent</code>是存在的，就用<code class="w3-codespan">parent</code>返回一个<code
+            class="w3-codespan">LayoutParams</code>,给这个根布局(<code class="w3-codespan">RelativeLayout</code>)使用，不存在就不会设置。
+        并且<code class="w3-codespan">attachToRoot</code>为<span class="keyword">true</span>那么就把根布局添加到<span
+                class="keyword">parent</span>，否则就不添加。
+    </li>
+    <li>递归创建<code class="w3-codespan">childView</code>。</li>
 </ul>
-<p>其实，简单说来就是解析我们的<span class="keyword">item.xml</span>文件，动态递归的从上到下创建这个<span class="keyword">View</span>。 </p>  
-<p>想必同学们都用过动态创建过<span class="keyword">View</span>，比如动态创建一个<span class="keyword">TextView</span>，需要创建后添加到<span class="keyword">LinearLayout</span>中，如果你没有主动调用<span class="keyword">TextView.setLayoutParams(..)</span>，你在<span class="keyword">addView</span>的时候，<span class="keyword">LinearLayout</span>会主动为你加上。如果不加上，<span class="keyword">LinearLayout</span>就不知道这个<span class="keyword">TextView</span>需要占多大的位置。</p>    
-<p>回到项目中遇到的问题：因为我是用下面的方法填充的: </p> 
-<pre class="code">LayoutInflater.from(context).inflate(R.layout.item, null)</pre>
-<p>结果导致了并没有设置生成的<span class="keyword">RelativeLayout</span>的<span class="keyword">LayoutParams</span>,然后在向<span class="keyword">RecyclerView</span>添加过程中，<span class="keyword">RecyclerView</span>发现，要被添加的<span class="keyword">View</span>竟然没有<span class="keyword">LayoutParams</span>参数，于是<span class="keyword">RecyclerView</span>就默认为<span class="keyword">RelativeLayout</span>设置了两个<span class="keyword">wrap_content</span>。于是<span class="keyword">item</span>布局发生了这样变化:</p> 
-<pre class="code">andrid:layout_width = "match_parent"
-android:layout_height = "96dp"</pre>
+<p>其实，简单说来就是解析我们的 <span class="w3-tag w3-round"> item.xml </span> 文件，动态递归的从上到下创建这个<code class="w3-codespan">View</code>。
+</p>
+<p>想必同学们都用过动态创建过<code class="w3-codespan">View</code>，比如动态创建一个<code class="w3-codespan">TextView</code>，需要创建后添加到<code
+        class="w3-codespan">LinearLayout</code>中，如果你没有主动调用<code
+        class="w3-codespan">TextView.setLayoutParams(..)</code>，你在<code class="w3-codespan">addView</code>的时候，<code
+        class="w3-codespan">LinearLayout</code>会主动为你加上。如果不加上，<code class="w3-codespan">LinearLayout</code>就不知道这个<code
+        class="w3-codespan">TextView</code>需要占多大的位置。</p>
+<p>回到项目中遇到的问题，因为我是用下面的方法填充的</p>
+<div class="w3-code">
+    LayoutInflater.from(context).inflate(R.layout.item, null)<br>
+</div>
+<p>结果导致了并没有设置生成的<code class="w3-codespan">RelativeLayout</code>的<code class="w3-codespan">LayoutParams</code>,
+    然后在向<code class="w3-codespan">RecyclerView</code>添加过程中，<code class="w3-codespan">RecyclerView</code>发现，要被添加的<code class="w3-codespan">View</code>竟然没有<code class="w3-codespan">LayoutParams</code>参数，于是<code class="w3-codespan">RecyclerView</code>就默认为
+			<code class="w3-codespan">RelativeLayout</code>设置了两个<code class="w3-codespan">wrap_content</code>。于是 <span class="w3-tag w3-round"> item </span> 布局发生了这样变化:
+</p>
+
+<div class="w3-code w3-card">
+andrid:layout_width = "match_parent"<br>
+android:layout_height = "96dp"<br>
+</div>
 <p>变成了</p>
-<pre class="code">andrid:layout_width = "wrap_content"
-android:layout_height = "wrap_content"</pre>
-<p>至于怎么解决，看你们的了。</p>    
+<div class="w3-code w3-card">
+andrid:layout_width = "wrap_content" <br>
+android:layout_height = "wrap_content"<br>
+</div>
+ 

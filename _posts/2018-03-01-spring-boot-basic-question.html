@@ -4,29 +4,50 @@ date: 2018-03-01
 title: Spring基础问题总结
 excerpt_separator: <!-- more -->
 ---
-<h3>什么是Spring boot 的默认资源映射?</h3>
-<p>
-当访问一个网站的时候的相关资源，比如css文件，静态html文件，js文件等。应该去哪里找？
-比如http://localhost:8080/css/main.css 当你访问这个资源的时候，服务要去后台服务器的哪个
-文件夹里面找呢？默认资源映射，就是指的是这个css/man.css 文件要去服务器的哪个地方去找。
-spring boot 的默认资源映射，是将/** 映射到 /static （或/public、/resources、/META-INF/resources） 
-那么，/css/main.css 就是 /**的一种，也就是说会到 static/文件夹下找这个 css/main.css 文件。
-</p>
 
-<h3>数据库应该以root安装吗？个人用户如何安装数据库呢？</h3>
-<h3>利用jpa连接到postgresql数据库，create-drop 会干了什么？会自动创建spring boot 表吗</h3>
-<h3>如何开放centos端口号？</h3>
-<h3>TomcatEmbeddedServletContainerFactory 方法找不到？</h3>
-<p>spring boot 2.0 版本和1.5版本的部分包的结构发生了改变，比如EmbeddedServletContaine
-变成了WebServer，org.springframework.boot.context.embedded包被重构成了org.springframework.boot.web.embedded
-详情请看<a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M1-Release-Notes">
+<p class="w3-padding">总结学习Spring boot 遇到的坑，和一些问题点，都是项目中想到的问题。</p><!-- more -->
+<div class="w3-container w3-card w3-white">
+	<h4 class="w3-large"><b>什么是Spring boot的默认资源映射?</b></h4>
+	<p class="w3-padding-top w3-padding-bottom">当访问一个网站的时候的相关资源，比如css文件，静态html文件，js文件等。应该去哪里找
+比如当你访问 <code class="w3-codespan">http://localhost:8080/css/main.css</code>这个资源的时候，服务要去后台服务器的哪个
+文件夹里面找呢？默认资源映射，就是指的是这个 <code class="w3-codespan">css/man.css</code> 文件要去服务器的哪个文件夹里去找。
+<code class="w3-codespan">spring boot</code>的默认资源映射，是将<code class="w3-codespan">/**</code> 映射到 <code class="w3-codespan">/static</code>（或<code class="w3-codespan">/public</code>、<code class="w3-codespan">/resources</code>、<code class="w3-codespan">/META-INF/resources)</code> 
+那么，<code class="w3-codespan">/css/main.css</code> 肯定包含在匹配符<code class="w3-codespan">/**</code>内，也就是说会到<code class="w3-codespan">static/</code>文件夹下，可以找到<code class="w3-codespan">css/main.css</code>。
+</p>
+</div>
+
+<div class="w3-container w3-card w3-white w3-margin-top">
+	<h4 class="w3-large"><b>利用jpa连接到postgresql数据库，create-drop 会干了什么？会自动创建spring boot 表吗?</b></h4>
+	<p class="w3-padding-top w3-padding-bottom">待补充</p>
+</div>
+<div class="w3-container w3-card w3-white w3-margin-top">
+<h4 class="w3-large"><b>如何对外开放centos7的端口号？</b></h4>
+<p class="w3-padding-top w3-padding-bottom">待补充</p>
+</div>
+
+<div class="w3-container w3-card w3-white w3-margin-top">
+<h4 class="w3-large"><b><code class="w3-codespan">TomcatEmbeddedServletContainerFactory</code> 类找不到？</b></h4>
+<p class="w3-padding-top w3-padding-bottom"><code class="w3-codespan">spring boot 2.0</code> 版本和<code class="w3-codespan">1.5</code>版本的部分包的结构发生了改变，比如<code class="w3-codespan">EmbeddedServletContaine</code>
+
+变成了<code class="w3-codespan">WebServer</code>，<code class="w3-codespan">org.springframework.boot.context.embedded</code>包被重构成了<code class="w3-codespan">org.springframework.boot.web.embedded</code>
+详情请看<a class="w3-text-blue"href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M1-Release-Notes">
 Spring-Boot-2.0.0-M1-Release-Notes</a></p>
-<h3>详细描述一下SecurityConstraint在Tomcat的作用,以及如何在Spring boot中实现对http 到https的重定向？</h3>
-<p>tomcat 是一个web容器，它是如何确定需要客户端提供ssl的？如果不是ssl 是如何禁止访问的？这应该是和SecurityConstraint
-的设置有关系，请简单描述一下</p>
-<h3>spring mvc Suffix match（后缀匹配） 问题</h3>
-<p>后缀匹配(Suffix match)在spring mvc 中是默认开启的，比如你把你的控制器映射到/person,也就是@Controller("/person")，也就默认
-映射到/person.*，这里扩展的名字(.* 这个部分)可以用来解释出请求数据的类型，比如.json 就表示，请求的是一个json类型的数据，于是。
-在服务器响应的时候，返回类型就是application/json。但是在spring boot 2.0.0中这个给后缀匹配被关闭了。如果你想明确给客户端返回特定的数据
-类型，可以在映射控制器注解中这么写 @GetMapping(path = "/pets/{petId}", produces = "application/json;charset=UTF-8")，这就表示我服务器
-响应的数据类型是"application/json"的. <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-requestmapping-suffix-pattern-match">Spring mvc Suffix match</a></p>
+</div>
+
+<div class="w3-container w3-card w3-white w3-margin-top">
+<h4 class="w3-large"><b>详细描述一下SecurityConstraint在Tomcat的作用,以及如何在Spring boot中实现对http到https的重定向？</b></h4>
+<p class="w3-padding-top w3-padding-bottom">待补充</p>
+</div>
+
+
+<div class="w3-container w3-card w3-white w3-margin-top">
+<h4 class="w3-large"><b><code class="w3-codespan">spring mvc Suffix match</code>(后缀匹配)问题</b></h4>
+<p class="w3-padding-top w3-padding-bottom">后缀匹配(<code class="w3-codespan">Suffix match</code>)在spring mvc 中是默认开启的，比如你把你的控制器映射到<code class="w3-codespan">/person</code>,也就是<code class="w3-codespan">@Controller("/person")</code>，也就默认
+映射到<code class="w3-codespan">/person.*</code>，这里扩展的名字(<code class="w3-codespan">.*</code>这个部分)可以用来解释出请求数据的类型，比如<code class="w3-codespan">.json</code> 就表示，请求的是一个<code class="w3-codespan">json</code>类型的数据，于是。
+在服务器响应的时候，返回类型就是<code class="w3-codespan">application/json</code>。但是在spring boot 2.0.0中这个给后缀匹配被关闭了。如果你想明确给客户端返回特定的数据
+类型，可以在映射控制器注解中这么写
+<div class="w3-code">
+ @GetMapping(path = "/pets/{petId}", produces = "application/json;charset=UTF-8")
+ </div>
+ 这就表示我服务器
+响应的数据类型是<code class="w3-codespan">"application/json"</code>的. <a class="w3-text-blue" href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-requestmapping-suffix-pattern-match">Spring mvc Suffix match</a></p>

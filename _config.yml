@@ -1,6 +1,8 @@
+gems: [jekyll-paginate]
+
 name: 乔俊
-permalink: /blog/:year/:month/:day/:title
-paginate: 10
+paginate: 5
 baseurl: /
 paginate_path: "/blog/page:num/"
 port: 4001
+
