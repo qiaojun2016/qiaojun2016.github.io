@@ -1,0 +1,10 @@
+git push origin master 命令可不是一条简单的命令
+它执行的步骤是：
+切换到本地master分支，把本地master分支的所有内容与远端的master分支相互对比，把没有记录添加到
+远端的master的分支，远端的master分支的代表，也就是origin/master分支上面。origin/master分支是远端分支的
+在本地的一个拷贝。
+
+比如你在 bar 分支，如果你想推送master分支的内容，你就需要执行git push origin master,如果是在master
+分支下就可以直接执行git push 命令.
+但是如果本地分支是foo，而远端分支是bar，那么如何推送呢？git push origin foo:bar 把本地foo分支的内容
+与origin/bar 想对比，把origin/bar没有的记录，添加进去，然后与远端的bar分支同步。

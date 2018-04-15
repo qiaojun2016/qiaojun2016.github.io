@@ -1,0 +1,41 @@
+---
+layout: post
+date: 2018-04-03
+title: Http基础和spring boot
+excerpt_separator: <!-- more -->
+---
+	<div class="w3-container">
+		<h4 class="w3-large">Http响应的Location头部是干什么的？</h4>
+		<p>Http响应头部的Location字段，表示的是当前URL需要被重定向到的页面地址。响应码303,308,301,302都会
+		在其Response的头部字段添加Location 字段;Location 和 Content-Location 是不同的，Location表示需要重定向的目标页面。</p>
+	</div>
+	
+	<div class="w3-container">
+		<h4 class="w3-large">简述用户登录认证的过程</h4>
+		<p>用户的安全登录的过程，大概是这样的
+		</p>
+		<ul class="w3-ul">
+			<li>用户访问某个Web页面，如果该页面需要认证的话，服务器会通过302重定向，将页面重定向到登录页面或者其他的认证页面</li>
+			<li>用户输入密码和用户名称，如果有其他认证也一并输入，通过post请求发送出去。</li>
+			<li>如果认证成功，那么会重定向到用户想访问的那个页面，并且在响应的头部会设置一个新的Cookie</li>
+			<li>只要这个Cookie存在，且没有过期，用户就可以通过这个Cookie来访问其他页面，从而不需要输入认证信息。</li>
+		
+		</ul>
+		<p>为什么输入一次密码以后就不用输入了？因为第一次登陆成功之后，服务器给本地客户端颁发了一个通行证的Cookie。然后，
+		接下来的每次请求，只要请求头字段里面加上这个Cookie，服务器收到请求之后，就知道该客户端已经认证过了。</p>
+	</div>
+	<div class="w3-container">
+		<h4 class="w3-large">Http Post的ContentType</h4>
+		<p>HTTP POST方法可以发送数据到服务器。那么发送内容的类型就是 Content-Type字段。
+    一条POST 请求常常用HTML 表单来发送，那么相应的Content-Type是可以自主设置的。
+    常用的设置有以下几种application/x-www-form-urlencoded body值是由key-value键值对组成的，每个键值对通过 '&'符号来分隔。
+    比如 username=user&password=123;但是，非字母和数字的字符都是用Percent-encoding。这也是为什么这种类型不适合发送
+    二进制数据的原因。发送二进制可以使用multipart/form-data.
+    如果POST请求是通过一个函数来发送的，不是表单那种格式，那么body可以是任何类型。</p>
+	</div>
+	
+	
+	
+
+
+ 

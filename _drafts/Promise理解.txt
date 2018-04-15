@@ -1,0 +1,167 @@
+什么是promise？
+一个Promise自然是一个javascript对象，一个Promise代表了javascript中异步操作的最后的结果，这个结果可能是成功
+的，也可能是失败。当然也可以是一个同步操作结果。异步操作，比如网络请求XmlHttpRequest，又如读取文件，又或者需要
+操作很费时间，比如爬取一个网页内容之类的，那我直接调用这些操作不行吗？肯定行，但是不美观。
+
+并且很重要的，如果太多异步操作，容易出错，因为你一般情况下请求结束的结果是很粗糙的，比如利用XmlHttpRequest
+请求得到结果是一段特别长的json串。你其实并不是很关这个json串如何如何，你可能需要把json串的某一个部分内容解析出来，
+如果没有Promise，你很可能会在成功回调的方法中，再次调用一个自定义的解析该Json串部分内容的方法，并为这个方法设置处理成功的回调。
+然后才把这个部分内容给解析出来。这还没有完呢，解析的时候万一解析出错了怎么办？又要回调一个解析出错的处理方法。层层的嵌套也就算了。
+可是你想过没有万一哪天，产品经理兴冲冲的跑过来对你说，嗨，"兄弟，换一种显示方式，这个解析的字段去掉！" 一万个草拟吗从老子头上飞过。
+并且，有可能当初编写这个冗长回调的方法的小媛已经离职了。只能一个回调一个回调的看。。。多么痛苦的情景，这小媛如果能把些请求利用
+Promise 包装一下，那现在改起来多方便啊？但是Promise是什么啊，不会啊，它是怎么就方便了呢，怎么就不需要这么多嵌套呢？
+它通过一系列的链式调用，来解决冗长的嵌套问题。这里只是提一嘴，给一个基本的概念，如果用过RxJava那么对这个应该很熟悉吧。
+
+那么Promise 是怎做的？对于一个异步执行的操作，你自然会有成功或者失败，成功了一般会有个结果值，失败了也会得到或者捕捉错误信息。
+很多时候，直接拿到的结果是很粗糙的，并不是我么关心的结果，但是它又是下一个操作输入，或者大多数情况下，这个结果并不是我们需要的结果，它还需要经过很多步骤的处理呢！
+我们不可能给用户显示一个完整的json串吧！
+
+假设现在有3个异步操作：异步操作1，异步操作2，异步操作3 每个操作都需要上一个操作的结果作为输入。
+
+肯定是先要从异步操作1开始执行，你先把异步操作1 放到Promise 中肯定会调用的的一个方法中
+
+var promise = new Promise(function(resolve, rejected){异步操作1;});
+
+单单看这个异步操作1，我们肯定知道，怎么算是成功怎么算是失败。
+如果成功就把成功的结果给resolve(result) ，失败了就调用 rejected(error) 你看看，就两种操作，成功，失败。
+多明确，都不用自己写回调了。
+ 
+ var promise = new Promise(function(resolve, rejected){异步请求1 成功 ? resolve(result):rejected(error);});
+ 
+你这样就是把一个普通的异步请求，变成了一个Promise对象。
+
+那么Promise内部是如何实现的呢，内部实现一种状态机模式，好像很高大上的东西。看文档就知道对于一个Promise 它有3个基本的状态
+
+pending 状态，不是fulfilled状态，也不是 rejected。
+fulfilled 状态，意思是操作已经成功完成，并且拿到了结果了。
+rejected 状态，意思是操作失败了，无论怎么样反正是失败了。
+
+
+
+这些状态谁来设置呢？当然是你，比如这个异步请求1，如果请求成功了你就会调用resolve(result);这个resolve就是promise自己实现的一个方法，
+一个Promise的实现大概会是这样的.
+
+	var PENDING = 0;
+	var FULFILLED = 1;
+	var REJECTED = 2;
+	
+	function Promise(fn) {
+		var state = PENDING;
+		
+		var value = null;
+		
+		var handlers = [];
+		
+		function fulfill(result) {
+			state = FULFILLED;
+			value = result;
+			handlers.foreach(handle);
+			handlers = null;
+		}
+		
+		function reject(error) {
+			state = REJECTED;
+			value = error;
+			handlers.foreach(handle);
+			handlers = null;
+		}
+		
+		function resolve(result) {
+			try {
+			
+				var then = getThen(result);
+				if (then) {
+					doResolve(then.bind(result), resolve, rejected);
+					return;
+				}
+				fulfill(result);
+			}catch(e) {
+				reject(e);
+			}
+		}
+		
+		function handle(handler) {
+			if (state === PENDING) {
+				handlers.push(handler);
+			} else {
+				if (state === FULFILLED && typeof handler.onFufilled === 'function') {
+					handler.onFufilled(value);
+				}
+				if (state === REJECTED && typeof handler.onRejected === 'function') {
+					handler.onRejected(value);
+				}
+			}
+		}
+		
+		this.done = function(onFufilled, onRejected) {
+			setTimeout(function(){
+			
+				handle({onFufilled:onFufilled,onRejected:onRejected});
+				
+			},0);
+		}
+		
+	}
+
+function resolve(result) {
+	try {
+		var then = getThen(result);
+		if (then) {
+			doResolve(then.bind(result), resolve,rejected);
+			return;
+		}
+		fulfill(result);
+	} catch(e) {
+		reject(e);
+	}
+
+}
+/**
+	检查 value 是否是一个Promise，如果是那么就返回它的 then方法
+	如果不是返回null
+	
+	@param{Promise|Any} value
+	@return {Function|NUll}
+**/
+function getThen(value) {
+	var t = typeof value; 
+	if (value && (t === 'object'|| t === 'function')) {
+		var then = value.then;
+		if (typeof then === 'function'){
+			return then;
+		}
+	}
+	return null;
+}
+
+function doResolve(fn, onFufilled, onRejected) {
+	var done = false;
+	try {
+		fn(function(value){
+			if (done) return;
+			done = true;
+			onFufilled(value);
+		}, function(reason) {
+			if (done) return;
+			done = true;
+			onRejected(reason);
+		})
+	}catch(ex) {
+		if (done) return;
+		done = true;
+		onRejected(ex);
+	}
+	
+}
+这个getThen方法是啥啊，它作用是检查一下你给的这个result，是不是一个Promise，如果是一个Promise，那么就等待这个
+doResolve(then.bind(result),resolve, rejected) 其中的 then.bind(result) 因为then是result对象的一个方法，我们需要在doResolve中
+调用这个 then 方法的时候，它的this 还是只向原来result，说起来可能有点绕口。
+
+当然会有几个特点：一个处于pending状态的promise 会变成fulfilled状态，也会变成 rejected 状态。
+当上任何一种状态转换发生的时候，那些通过promise.then添加的回调方法(handlers)就会调用。但是如果
+这个promise已经是fulfilled或者rejected，你之后通过then添加回调也会被调用。并且Promise.protype.then()
+和 Promise.prototype.catch() 方法可以返回一个Promise，这样就会形成一条链式调用。
+basePromise.then(function).then(function)...;
+
+spring 讲的不错。
+https://spring.io/understanding/javascript-promises 
