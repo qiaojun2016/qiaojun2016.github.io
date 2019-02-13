@@ -1,22 +1,7 @@
 ---
 layout: default
 ---
-<div class="w3-container w3-pale-blue ">
-	<!-- Header -->
-		<header class="w3-container  w3-center " style="padding:64px 16px">
-			<h1 class="w3-margin w3-xxlarge"><b>{{ page.title }}</b></h1>
-			<p class="w3-xlarge">桥小白</p>
-			<span>{{ page.date| date: "%Y-%m-%d"}}</span>
-		</header>
+<h2>{{ page.title }}</h2>
+<p class="meta">{{ page.date | date_to_string }}</p>
 
-
-<div class="w3-container" style="width:70%">
-  {{ content }}
-</div>
-<!-- Footer -->
-
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-
- 
-</footer>
-</div>
+{{ content }}
