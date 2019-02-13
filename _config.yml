@@ -1,5 +1,6 @@
 gems: [jekyll-paginate]
-
+kramdown:  
+  parse_block_html: true
 name: 乔俊
 paginate: 5
 baseurl: /
