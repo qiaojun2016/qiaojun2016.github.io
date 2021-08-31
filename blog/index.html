@@ -11,15 +11,13 @@ tagline:
   <section class="is-flex is-flex-direction-row is-flex-wrap-wrap">
     {% for post in site.posts %}
     <div class="card m-2" style="width:30%;">
-      <header class="card-header">
-        <p class="card-header-title">
-         <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-        </p>
-      </header>
+
       
       <div class="card-content">
         <div class="content" style="max-height:150px;overflow:hidden;text-overflow: ellipsis;">
-           {{ post.excerpt }}
+          <p class="card-header-title">
+         <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+        </p>
         </div>
       </div>
         
