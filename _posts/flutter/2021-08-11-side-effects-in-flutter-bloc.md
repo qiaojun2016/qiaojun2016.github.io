@@ -1,4 +1,9 @@
 
+---
+title: 如何处理flutter-bloc 中的side-effect
+tags: flutter flutter-bloc bloc
+layout: page
+---
 
 
 
