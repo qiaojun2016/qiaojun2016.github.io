@@ -19,7 +19,12 @@ tagline:
            {{ post.excerpt }}
         </div>
       </div>
-      <span>{{ post.date | date_to_string }}</span>
+      <footer class="card-footer">
+  
+          <span>{{ post.date | date_to_string }}</span>
+    <a href="{{ site.baseurl }}{{ post.url }}" class="card-footer-item"进入</a>
+  </footer>
+    
     </div>
     {% endfor %}
   </section>
