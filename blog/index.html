@@ -1,13 +1,15 @@
 ---
 layout: default
-title: 藏器于身、待时而动
-tagline: 人要一直往前走，不能回头
+title:""
+tagline: ""
 ---
 <div id="home">
-  <h1>Blog Posts</h1>
-  <ul class="posts">
+  <h1>博客列表</h1>
+  <section class="is-flex is-flex-direction-row is-flex-wrap-wrap">
     {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+    <div class="card">
+      <span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+    <div>
     {% endfor %}
   </ul>
 </div>
