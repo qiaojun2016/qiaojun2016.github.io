@@ -10,10 +10,10 @@ tagline:
     <div class="card" style="width:30%;">
       <header class="card-header">
         <p class="card-header-title">
-          {{ post.title }}
+         <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
         </p>
       </header>
-      <span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+      <span>{{ post.date | date_to_string }}</span>
     </div>
     {% endfor %}
   </section>
