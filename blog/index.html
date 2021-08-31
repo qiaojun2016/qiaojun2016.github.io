@@ -10,14 +10,12 @@ tagline:
   <h1>博客列表</h1>
   <section class="is-flex is-flex-direction-row is-flex-wrap-wrap">
     {% for post in site.posts %}
-    <div class="card m-2" style="width:30%;">
+    <div class="card m-2" style="width:30%; min-height:100px;">
 
       
       <div class="card-content">
         <div class="content">
-        
          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-        
         </div>
       </div>
         
