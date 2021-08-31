@@ -13,6 +13,12 @@ tagline:
          <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
         </p>
       </header>
+      
+      <div class="card-content">
+        <div class="content">
+           {{ post.excerpt }}
+        </div>
+      </div>
       <span>{{ post.date | date_to_string }}</span>
     </div>
     {% endfor %}
