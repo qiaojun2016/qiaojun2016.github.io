@@ -2,6 +2,7 @@
 title: 如何处理flutter-bloc 中的side-effect
 tags: flutter flutter-bloc bloc
 categories: flutter
+excerpt: 如何处理 flutter-bloc 中的side-effect?
 layout: page
 ---
 
