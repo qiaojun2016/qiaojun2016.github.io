@@ -1,15 +1,17 @@
 ---
 title: 如何处理flutter-bloc 中的side-effect
 tags: flutter flutter-bloc bloc
+categories: flutter
 layout: page
 ---
 
 
 
-如何处理flutter-bloc 中的side-effect。
-(https://github.com/felangel/bloc/issues/812)[https://qiaojun2016.github.io/blog/index.html]
+**如何处理 flutter-bloc 中的side-effect ？**
 
-问题描述: 在 BlocListener 中处理类似于弹框的side-effect 会覆盖掉数据状态(Loaded)中已经加载的数据。
+[stackoverflow](https://github.com/felangel/bloc/issues/812)
+
+例如在 BlocListener 中处理类似于弹框的side-effect 会覆盖掉数据状态(Loaded)中已经加载的数据。
 
 **不是所有的事情都要数据驱动变化**
 
